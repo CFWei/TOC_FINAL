@@ -6,7 +6,7 @@ import csv
 from urllib import urlretrieve
 import re
 import time 
-
+import math
 
 output=file("output.txt",'w')
 init_year=2002
@@ -19,12 +19,13 @@ now_year=time.localtime(time.time()).tm_year
 now_month=time.localtime(time.time()).tm_mon
 now_day=time.localtime(time.time()).tm_mday
 
-print "程式執行中　請稍候"
+print "=====程式執行中　請稍候===="
 
 for y in range(now_year-init_year+1):
+	print y+1,"/",now_year-init_year+1
 	years=init_year+y	
 	temp_per_year=[]
-	for x in range(12):
+	for x in range(12):	
 		if(years==now_year):
 			if(x+1>now_month):
 				break
@@ -112,6 +113,9 @@ for i in range(len(negative_price)):
 if(len(negative_price)>0):
 	negative_price_mean=temp_value/len(positive_price)
 
+print "=======程式執行完成======="
+
+
 print "今天日期:",
 print now_year,
 print "/",
@@ -143,4 +147,31 @@ print "跌的次數:",
 print len(negative_price)
 
 
+float_positive_len=float(len(positive_price))
+float_negative_len=float(len(negative_price))
 
+positive_frequency_ratio=round(float_positive_len/float_negative_len)
+negative_frequency_ratio=round(float_negative_len/float_positive_len)
+
+
+print "平均漲",positive_frequency_ratio,"次就會跌",negative_frequency_ratio,"次"
+
+substration=positive_frequency_ratio*positive_price_mean + negative_frequency_ratio*negative_price_mean
+
+
+if(substration>=0):
+	print "平均每",positive_frequency_ratio+negative_frequency_ratio,"個月會漲",substration,"元"
+else:
+	
+	print "平均每",positive_frequency_ratio+negative_frequency_ratio,"個月會跌",-substration,"元"
+
+prediction_price=float(500)
+
+best_condition=(prediction_price-float(today_close_price))/positive_price_mean
+
+print "若是今天開始穩定成長 要",round(best_condition),"個月後才能超過",prediction_price,"元"
+
+mean_condition=(prediction_price-float(today_close_price))/substration
+mean_condition=mean_condition*2
+
+print "若是今天開始平均成長 要",round(mean_condition),"個月後才能超過",prediction_price,"元"
