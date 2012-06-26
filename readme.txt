@@ -1,10 +1,10 @@
-©m¦W:ÃQÂ@¦|
-¨t¯Å:¸ê°T102
-¾Ç¸¹:F74981183
-ÀÉ®×:final.py¡Breadme¡BFinal Term Project
+å§“åï¼šé­é§¿å¸†
+å­¸è™Ÿï¼šF74981183
+ç³»ç´šï¼šè³‡è¨Š102
+æª”æ¡ˆï¼šreadme.txt ã€final.py ã€Final Term Project.pdf
 
-°õ¦æ¤è¦¡:
-python final.py (¹w´úªºªÑ»ù)
+åŸ·è¡Œæ–¹å¼ï¼š
+python final.py (è¦é æ¸¬çš„è‚¡åƒ¹)
 
 ex:
 python final.py 500
