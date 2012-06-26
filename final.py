@@ -7,10 +7,13 @@ from urllib import urlretrieve
 import re
 import time 
 import math
+import sys
 
-output=file("output.txt",'w')
+if(len(sys.argv)<2):
+	print "Please input correct argument"
+	exit()
+
 init_year=2002
-
 close_price=[]
 max_close_price=0
 minimum_close_price=10000
@@ -41,7 +44,6 @@ for y in range(now_year-init_year+1):
 		url="http://www.twse.com.tw/ch/trading/exchange/STOCK_DAY/STOCK_DAY_print.php?genpage=genpage/Report"+year+month+"/"+year+month+"_F3_1_8_"+stock_num+".php&type=csv"
 		urlretrieve(url,FILE_NAME)
 		file=csv.reader(open(FILE_NAME))
-		output.write("===="+year+month+"====="+"\n")
 		for row in file:
 			if(len(row)>6):
 				a=re.search('[\d]*,?[\d]*[\.]*[\d]*',row[6])	
@@ -165,13 +167,20 @@ else:
 	
 	print "平均每",positive_frequency_ratio+negative_frequency_ratio,"個月會跌",-substration,"元"
 
-prediction_price=float(500)
+prediction_price=float(sys.argv[1])
 
 best_condition=(prediction_price-float(today_close_price))/positive_price_mean
 
 print "若是今天開始穩定成長 要",round(best_condition),"個月後才能超過",prediction_price,"元"
 
 mean_condition=(prediction_price-float(today_close_price))/substration
-mean_condition=mean_condition*2
+mean_condition=mean_condition*(positive_frequency_ratio+negative_frequency_ratio)
 
 print "若是今天開始平均成長 要",round(mean_condition),"個月後才能超過",prediction_price,"元"
+
+if(prediction_price>max_close_price):
+	print "預測股價已經高過歷年最高股價"
+
+if(prediction_price<minimum_close_price):
+	print "預測股價已經低過歷年最低股價"
+
